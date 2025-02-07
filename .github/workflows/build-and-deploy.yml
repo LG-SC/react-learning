@@ -25,7 +25,7 @@ jobs:
         
         -   name: Install Dependencies
             run: pnpm install
-            
+
         -   name: Build React project
             run: pnpm run build
     deploy:
@@ -33,9 +33,9 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         -   name: Deploy!    
-            uses: JamesIves/github-pages-deploy-action@v4
+            uses: JamesIves/github-pages-deploy-action@4.0.0
             with:
                 BRANCH: gh-pages
-                FOLDER: dist
+                FOLDER: ../dist
                 
     
