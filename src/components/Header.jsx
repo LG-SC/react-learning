@@ -1,6 +1,5 @@
 import reactImg from '../assets/react.svg'
 
-
 const reactDescriptions = ['Fundamental', 'Crucial', 'Core'];
 
 function genRandomInt(max) {
