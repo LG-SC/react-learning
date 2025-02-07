@@ -8,22 +8,25 @@ on:
 
 jobs:
     build:
-
         runs-on: ubuntu-latest
-        
         strategy:
             matrix:
                 node-version: [ 20.x ]
-        
         steps:
-        -   uses: actions/checkout@v2
+        -   uses: actions/checkout@v4
+        -   name: Install pnpm
+            uses: pnpm/action-setup@v4
+            with:
+                version: 8.6
         -   name: Use NodeJS ${{matrix.node-version}}
-            uses: actions/setup-node@v1
+            uses: actions/setup-node@v4
             with:
                 node-version: ${{matrix.node-version}}
-
-        -   run: pnpm ci
-        -   run: pnpm run build
+        
+        -   name: Install Dependencies
+            run: pnpm install
+        -   name: Build React project
+            run: pnpm run build
 
         -   name: Deploy!
             uses: JamesIves/github-pages-deploy-action@3.5.9
