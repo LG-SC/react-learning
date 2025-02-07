@@ -4,8 +4,18 @@ import CoreConcept from "./components/CoreConcepts";
 import { useState } from "react";
 import { CORE_CONCEPTS } from "./data";
 import TabButton from "./components/TabButton";
+import { useEffect } from "react";
+import api from "./utils/api";
 
 function App() {
+	useEffect(() => {fetchRepo()}, []);
+	const fetchRepo = async () => {
+		const data = await api.get('/users/LG-SC/repos');
+		if(data.status == 200) {
+			setRepos(data.data)
+		}
+	}
+	const [repos, setRepos] = useState(null);
 	const [count, setCount] = useState(0);
 	const [tabContent, setTabcontent] = useState('Please select a button.');
 
@@ -18,6 +28,7 @@ function App() {
 		<div>
 			<Header/>
 			<main>
+				{console.log(JSON.stringify(repos))}
 				<section id="core-concepts">
 					<h2>Time to get started!</h2>
 					<ul>
