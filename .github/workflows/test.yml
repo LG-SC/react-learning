@@ -7,7 +7,7 @@ on:
         branches: [ main ]
 
 jobs:
-    build:
+    build-and-deploy:
         runs-on: ubuntu-latest
         strategy:
             matrix:
@@ -27,13 +27,12 @@ jobs:
             run: pnpm install
         -   name: Build React project
             run: pnpm run build
-    deploy:
-            runs-on: ubuntu-latest
-            steps:
-            -   name: Deploy!    
-                uses: JamesIves/github-pages-deploy-action@v4
-                with:
-                    GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-                    BRANCH: gh-pages
-                    FOLDER: dist            
+
+        -   name: Deploy!    
+            uses: JamesIves/github-pages-deploy-action@v4
+            with:
+                GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+                BRANCH: gh-pages
+                FOLDER: dist
+                
     
