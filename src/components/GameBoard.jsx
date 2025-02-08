@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
 
 const initialGameBoard = [
     [null, null, null],
@@ -7,24 +6,34 @@ const initialGameBoard = [
     [null, null, null],
 ]
 
-function GameBoard({ onSelectSquare, activePlayerSymbol }) {
-    const [gameBoard, setGameBoard] = useState(initialGameBoard);
+function GameBoard({ onSelectSquare, turns }) {
+    let gameBoard = initialGameBoard;
+    for (const turn of turns) {
+        const { square, player } = turn;
+        const { row, col } = square;
 
-    const handleSelectSquare = (rIndex, cIndex, activePlayerSymbol) => {
-        setGameBoard((prevGameBoard) => {
-            const newGameBoard = [...prevGameBoard.map(innerArr => [...innerArr])];
-            newGameBoard[rIndex][cIndex] = activePlayerSymbol;
-            return newGameBoard;
-        });
-        onSelectSquare();
+
+        gameBoard[row][col] = player.symbol;
     }
+    // const [gameBoard, setGameBoard] = useState(initialGameBoard);
+
+    // const handleSelectSquare = (rIndex, cIndex, activePlayerSymbol) => {
+    //     setGameBoard((prevGameBoard) => {
+    //         const newGameBoard = [...prevGameBoard.map(innerArr => [...innerArr])];
+    //         newGameBoard[rIndex][cIndex] = activePlayerSymbol;
+    //         return newGameBoard;
+    //     });
+    //     onSelectSquare();
+    // }
 
     return (
         <ol id="game-board">
             {gameBoard.map((row, rIndex) => <li key={rIndex}>
                 <ol>
                     {row.map((playerSymbol, cIndex) => <li key={cIndex}>
-                        <button onClick={() => handleSelectSquare(rIndex, cIndex, activePlayerSymbol)}>{playerSymbol}</button>
+                        <button onClick={() => onSelectSquare(rIndex, cIndex)}>
+                            {playerSymbol}
+                        </button>
                     </li>)}
                 </ol>
             </li>)}
