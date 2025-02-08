@@ -1,33 +1,26 @@
-
-import Header from "./components/Header/Header";
-import CoreConcepts from "./components/CoreConcepts";
-import Examples from "./components/Examples";
+import Player from "./components/Player";
+import GameBoard from "./components/GameBoard";
+import Log from "./components/Log";
 import { useState } from "react";
 
-import { useEffect } from "react";
-import api from "./utils/api";
-
 function App() {
-	const [repos, setRepos] = useState(null);
+	const [ activePlayerSymbol, setActivePlayerSymbol ] = useState("X");
 
-	useEffect(() => {fetchRepo()}, []);
-	const fetchRepo = async () => {
-		const data = await api.get('/users/LG-SC/repos');
-		if(data.status == 200) {
-			setRepos(data.data)
-		}
+	const handleSelectSquare = () => {
+		setActivePlayerSymbol((lastActivePlayerSymbol) => lastActivePlayerSymbol === "X" ? "O" : "X")
 	}
 
 	return (
-		<div>
-			{console.log(JSON.stringify(repos))}
-			<Header />
-			<main>
-				<CoreConcepts />
-				<Examples />
-			</main>
-		</div>
-	);
+		<main>
+			<div id="game-container">
+				<ol id="players" className="highlight-player">
+					<Player id="O" defaultName="Player 1" activePlayerSymbol={activePlayerSymbol} />
+					<Player id="X" defaultName="Player 2" activePlayerSymbol={activePlayerSymbol} />
+				</ol>
+				<GameBoard onSelectSquare={handleSelectSquare} activePlayerSymbol={activePlayerSymbol}/>
+			</div>
+			<Log />
+		</main>
+	)
 }
-
 export default App;
