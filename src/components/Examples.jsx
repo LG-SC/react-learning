@@ -2,6 +2,7 @@ import TabButton from "./TabButton";
 import Section from "./Section";
 import { useState } from "react";
 import { EXAMPLES } from "../data";
+import Tabs from "./Tabs";
 
 function Examples() {
     const [topicContent, setTopicContent] = useState();
@@ -26,6 +27,43 @@ function Examples() {
 
     return (
         <Section id="examples" title="Examples">
+            <Tabs 
+                buttons={
+                    <>
+                        <TabButton
+                            id="components"
+                            activeId={topicContent}
+                            onSelect={selectHandler}
+                        >
+                            Components
+                        </TabButton>
+                        <TabButton
+                            id="jsx"
+                            activeId={topicContent}
+                            onSelect={selectHandler}
+                        >
+                            JSX
+                        </TabButton>
+                        <TabButton
+                            id="props"
+                            activeId={topicContent}
+                            onSelect={selectHandler}
+                        >
+                            Props
+                        </TabButton>
+                        <TabButton
+                            id="state"
+                            activeId={topicContent}
+                            onSelect={selectHandler}
+                        >
+                            State
+                        </TabButton>
+                    </>
+                }>
+                {tabContent}
+            </Tabs>
+
+
             <menu>
                 {/* {EXAMPLES.map((exampleItem) => (
                 <TabButton
@@ -38,36 +76,8 @@ function Examples() {
                 </TabButton>
                 ))} */}
 
-                <TabButton
-                    id="components"
-                    isIdSelected={topicContent}
-                    onSelect={selectHandler}
-                >
-                    Components
-                </TabButton>
-                <TabButton
-                    id="jsx"
-                    isIdSelected={topicContent}
-                    onSelect={selectHandler}
-                >
-                    JSX
-                </TabButton>
-                <TabButton
-                    id="props"
-                    isIdSelected={topicContent}
-                    onSelect={selectHandler}
-                >
-                    Props
-                </TabButton>
-                <TabButton
-                    id="state"
-                    isIdSelected={topicContent}
-                    onSelect={selectHandler}
-                >
-                    State
-                </TabButton>
+                
             </menu>
-            {tabContent}
         </Section>
     )
 }
